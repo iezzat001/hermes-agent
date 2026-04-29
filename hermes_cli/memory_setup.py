@@ -233,10 +233,16 @@ def cmd_setup(args) -> None:
     items = []
     for name, desc, _ in providers:
         items.append((name, f"— {desc}"))
-    items.append(("Built-in only", "— MEMORY.md / USER.md (default)"))
+    items.append(("Built-in only", "— MEMORY.md / USER.md"))
 
-    builtin_idx = len(items) - 1
-    selected = _curses_select("Memory provider setup", items, default=builtin_idx)
+    # Default the cursor to the holographic entry when present (the default
+    # external provider for new installs).  Fall back to the built-in row.
+    default_idx = len(items) - 1
+    for idx, (pname, _, _) in enumerate(providers):
+        if pname == "holographic":
+            default_idx = idx
+            break
+    selected = _curses_select("Memory provider setup", items, default=default_idx)
 
     config = load_config()
     if not isinstance(config.get("memory"), dict):

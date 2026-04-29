@@ -71,6 +71,26 @@ class TestLoadConfigDefaults:
             assert config["terminal"]["backend"] == "local"
             assert config["display"]["interim_assistant_messages"] is True
 
+    def test_default_memory_provider_is_holographic(self, tmp_path):
+        """New installs should activate the holographic memory provider by default.
+
+        Holographic is local-only (SQLite + optional NumPy), requires no API
+        key, and ships pre-activated so users get persistent fact memory out
+        of the box. Users can disable via `hermes memory off` (which writes
+        an explicit empty string).
+        """
+        assert DEFAULT_CONFIG["memory"]["provider"] == "holographic"
+        with patch.dict(os.environ, {"HERMES_HOME": str(tmp_path)}):
+            config = load_config()
+            assert config["memory"]["provider"] == "holographic"
+
+    def test_explicit_blank_memory_provider_is_preserved(self, tmp_path):
+        """`hermes memory off` writes provider: '' — that must override the default."""
+        with patch.dict(os.environ, {"HERMES_HOME": str(tmp_path)}):
+            (tmp_path / "config.yaml").write_text("memory:\n  provider: ''\n")
+            config = load_config()
+            assert config["memory"]["provider"] == ""
+
     def test_legacy_root_level_max_turns_migrates_to_agent_config(self, tmp_path):
         with patch.dict(os.environ, {"HERMES_HOME": str(tmp_path)}):
             config_path = tmp_path / "config.yaml"

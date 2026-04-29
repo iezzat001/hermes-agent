@@ -759,7 +759,11 @@ def _discover_context_engines() -> list[tuple[str, str]]:
 
 
 def _get_current_memory_provider() -> str:
-    """Return the current memory.provider from config (empty = built-in)."""
+    """Return the current memory.provider from config.
+
+    Default is "holographic" (local SQLite fact store with FTS5 + HRR).
+    Empty string means built-in MEMORY.md / USER.md only.
+    """
     try:
         from hermes_cli.config import load_config
         config = load_config()
