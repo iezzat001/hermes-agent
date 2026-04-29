@@ -430,6 +430,14 @@ memory:
   # For exit/reset, only fires if the session had at least this many user turns.
   flush_min_turns: 6        # Min user turns to trigger flush on exit/reset (0 = disabled)
 
+  # External memory provider plugin (active alongside built-in MEMORY.md/USER.md).
+  # Default: "holographic" — local SQLite fact store with FTS5 search, trust
+  # scoring, and HRR-based compositional retrieval. No API key required.
+  # Other choices: "honcho", "openviking", "mem0", "hindsight", "retaindb",
+  # "byterover", "supermemory". Set to "" to use built-in memory only.
+  # Switch with `hermes memory setup` or `hermes config set memory.provider <name>`.
+  provider: "holographic"
+
 # =============================================================================
 # Session Reset Policy (Messaging Platforms)
 # =============================================================================

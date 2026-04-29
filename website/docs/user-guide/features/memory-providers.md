@@ -8,6 +8,10 @@ description: "External memory provider plugins — Honcho, OpenViking, Mem0, Hin
 
 Hermes Agent ships with 8 external memory provider plugins that give the agent persistent, cross-session knowledge beyond the built-in MEMORY.md and USER.md. Only **one** external provider can be active at a time — the built-in memory is always active alongside it.
 
+:::tip Default provider
+Hermes activates **[Holographic](#holographic)** by default — a local-only SQLite fact store with FTS5 search, trust scoring, and HRR-based compositional retrieval. No API key, no external service, no extra install needed. Run `hermes memory off` to disable it, or pick another provider with `hermes memory setup`.
+:::
+
 ## Quick Start
 
 ```bash
@@ -22,7 +26,7 @@ Or set manually in `~/.hermes/config.yaml`:
 
 ```yaml
 memory:
-  provider: openviking   # or honcho, mem0, hindsight, holographic, retaindb, byterover, supermemory
+  provider: holographic   # default — or honcho, openviking, mem0, hindsight, retaindb, byterover, supermemory
 ```
 
 ## How It Works
@@ -372,7 +376,7 @@ See [plugin README](https://github.com/NousResearch/hermes-agent/blob/main/plugi
 
 ### Holographic
 
-Local SQLite fact store with FTS5 full-text search, trust scoring, and HRR (Holographic Reduced Representations) for compositional algebraic queries.
+Local SQLite fact store with FTS5 full-text search, trust scoring, and HRR (Holographic Reduced Representations) for compositional algebraic queries. **This is the default memory provider** — it ships pre-activated so new installs get persistent fact memory out of the box without configuring an external service.
 
 | | |
 |---|---|
@@ -380,6 +384,7 @@ Local SQLite fact store with FTS5 full-text search, trust scoring, and HRR (Holo
 | **Requires** | Nothing (SQLite is always available). NumPy optional for HRR algebra. |
 | **Data storage** | Local SQLite |
 | **Cost** | Free |
+| **Default** | ✓ Active out of the box |
 
 **Tools:** `fact_store` (9 actions: add, search, probe, related, reason, contradict, update, remove, list), `fact_feedback` (helpful/unhelpful rating that trains trust scores)
 

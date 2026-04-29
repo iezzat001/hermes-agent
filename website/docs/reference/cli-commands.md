@@ -739,7 +739,7 @@ Unified plugin management — general plugins, memory providers, and context eng
 | `list` (alias: `ls`) | List installed plugins with enabled/disabled status. |
 
 Provider plugin selections are saved to `config.yaml`:
-- `memory.provider` — active memory provider (empty = built-in only)
+- `memory.provider` — active memory provider (default: `"holographic"`; empty = built-in only)
 - `context.engine` — active context engine (`"compressor"` = built-in default)
 
 General plugin disabled list is stored in `config.yaml` under `plugins.disabled`.

@@ -213,10 +213,10 @@ Provider plugin selections are saved to `config.yaml`:
 
 ```yaml
 memory:
-  provider: "honcho"      # empty string = built-in only
+  provider: "holographic"   # default — empty string = built-in only
 
 context:
-  engine: "compressor"    # default built-in compressor
+  engine: "compressor"      # default built-in compressor
 ```
 
 ### Enabled vs. disabled vs. neither
